@@ -3,20 +3,18 @@ package ifpr.pgua.eic.tarefas.controllers;
 import ifpr.pgua.eic.tarefas.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
-public class Cadastrar {
+public class CadastrarEmail {
   @FXML
-  void agenda(ActionEvent event) {
-    App.pushScreen("CADASTRARAGENDA");
-  }
-
-  @FXML
-  void email(ActionEvent event) {
-    App.pushScreen("CADASTRAREMAIL");
-  }
+  private ComboBox<?> cbAgenda;
 
   @FXML
-  void telefone(ActionEvent event) {
+  private TextField tfEmail;
+
+  @FXML
+  void cadastrar(ActionEvent event) {
 
   }
 
