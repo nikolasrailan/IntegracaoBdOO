@@ -5,6 +5,10 @@ import ifpr.pgua.eic.tarefas.controllers.CadastrarAgenda;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarEmail;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarTelefone;
 import ifpr.pgua.eic.tarefas.controllers.Principal;
+import ifpr.pgua.eic.tarefas.model.daos.AgendaDAO;
+import ifpr.pgua.eic.tarefas.model.daos.JDBCAgendaDAO;
+import ifpr.pgua.eic.tarefas.model.entities.FabricaConexoes;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioAgenda;
 import io.github.hugoperlin.navigatorfx.BaseAppNavigator;
 import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
 
@@ -12,6 +16,9 @@ import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
  * JavaFX App
  */
 public class App extends BaseAppNavigator {
+
+    private AgendaDAO agendaDAO = new JDBCAgendaDAO(FabricaConexoes.getInstance());
+    private RepositorioAgenda repositorioAgenda = new RepositorioAgenda(agendaDAO);
 
     public static void main(String[] args) {
         launch();
@@ -34,7 +41,8 @@ public class App extends BaseAppNavigator {
         registraTela("PRINCIPAL", new ScreenRegistryFXML(App.class, "principal.fxml", o -> new Principal()));
         registraTela("CADASTRAR", new ScreenRegistryFXML(App.class, "cadastrar.fxml", o -> new Cadastrar()));
         registraTela("CADASTRARAGENDA",
-                new ScreenRegistryFXML(App.class, "cadastrar_agenda.fxml", o -> new CadastrarAgenda()));
+                new ScreenRegistryFXML(App.class, "cadastrar_agenda.fxml",
+                        o -> new CadastrarAgenda(repositorioAgenda)));
         registraTela("CADASTRAREMAIL",
                 new ScreenRegistryFXML(App.class, "cadastrar_email.fxml", o -> new CadastrarEmail()));
         registraTela("CADASTRARTELEFONE",
