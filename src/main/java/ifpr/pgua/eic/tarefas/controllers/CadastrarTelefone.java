@@ -39,7 +39,6 @@ public class CadastrarTelefone implements Initializable {
 
     String telefone = tfTelefone.getText();
     Agenda agenda = cbAgenda.getSelectionModel().getSelectedItem();
-    System.out.println("AQUIIII");
     Resultado rs = repositorio.cadastrarTelefone(telefone, agenda);
 
     Alert alert;

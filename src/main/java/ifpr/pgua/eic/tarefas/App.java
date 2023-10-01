@@ -6,11 +6,14 @@ import ifpr.pgua.eic.tarefas.controllers.CadastrarEmail;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarTelefone;
 import ifpr.pgua.eic.tarefas.controllers.Principal;
 import ifpr.pgua.eic.tarefas.model.daos.AgendaDAO;
+import ifpr.pgua.eic.tarefas.model.daos.EmailDAO;
 import ifpr.pgua.eic.tarefas.model.daos.JDBCAgendaDAO;
+import ifpr.pgua.eic.tarefas.model.daos.JDBCEmailDAO;
 import ifpr.pgua.eic.tarefas.model.daos.JDBCTelefoneDAO;
 import ifpr.pgua.eic.tarefas.model.daos.TelefoneDAO;
 import ifpr.pgua.eic.tarefas.model.entities.FabricaConexoes;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioAgenda;
+import ifpr.pgua.eic.tarefas.model.repositories.RepositorioEmail;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTelefone;
 import io.github.hugoperlin.navigatorfx.BaseAppNavigator;
 import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
@@ -25,6 +28,9 @@ public class App extends BaseAppNavigator {
 
     private TelefoneDAO telefoneDAO = new JDBCTelefoneDAO(FabricaConexoes.getInstance());
     private RepositorioTelefone repositorioTelefone = new RepositorioTelefone(telefoneDAO);
+
+    private EmailDAO emailDAO = new JDBCEmailDAO(FabricaConexoes.getInstance());
+    private RepositorioEmail repositorioEmail = new RepositorioEmail(emailDAO);
 
     public static void main(String[] args) {
         launch();
@@ -50,7 +56,8 @@ public class App extends BaseAppNavigator {
                 new ScreenRegistryFXML(App.class, "cadastrar_agenda.fxml",
                         o -> new CadastrarAgenda(repositorioAgenda)));
         registraTela("CADASTRAREMAIL",
-                new ScreenRegistryFXML(App.class, "cadastrar_email.fxml", o -> new CadastrarEmail()));
+                new ScreenRegistryFXML(App.class, "cadastrar_email.fxml",
+                        o -> new CadastrarEmail(repositorioEmail, repositorioAgenda)));
         registraTela("CADASTRARTELEFONE",
                 new ScreenRegistryFXML(App.class, "cadastrar_telefone.fxml",
                         o -> new CadastrarTelefone(repositorioTelefone, repositorioAgenda)));
