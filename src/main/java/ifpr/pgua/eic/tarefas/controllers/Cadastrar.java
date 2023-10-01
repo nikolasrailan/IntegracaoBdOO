@@ -17,7 +17,7 @@ public class Cadastrar {
 
   @FXML
   void telefone(ActionEvent event) {
-
+    App.pushScreen("CADASTRARTELEFONE");
   }
 
   @FXML

@@ -3,6 +3,7 @@ package ifpr.pgua.eic.tarefas;
 import ifpr.pgua.eic.tarefas.controllers.Cadastrar;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarAgenda;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarEmail;
+import ifpr.pgua.eic.tarefas.controllers.CadastrarTelefone;
 import ifpr.pgua.eic.tarefas.controllers.Principal;
 import io.github.hugoperlin.navigatorfx.BaseAppNavigator;
 import io.github.hugoperlin.navigatorfx.ScreenRegistryFXML;
@@ -36,6 +37,8 @@ public class App extends BaseAppNavigator {
                 new ScreenRegistryFXML(App.class, "cadastrar_agenda.fxml", o -> new CadastrarAgenda()));
         registraTela("CADASTRAREMAIL",
                 new ScreenRegistryFXML(App.class, "cadastrar_email.fxml", o -> new CadastrarEmail()));
+        registraTela("CADASTRARTELEFONE",
+                new ScreenRegistryFXML(App.class, "cadastrar_telefone.fxml", o -> new CadastrarTelefone()));
     }
 
 }
