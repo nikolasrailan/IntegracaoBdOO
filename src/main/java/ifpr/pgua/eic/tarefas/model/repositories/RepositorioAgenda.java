@@ -21,4 +21,9 @@ public class RepositorioAgenda {
 
     return dao.criar(agenda);
   }
+
+  public Resultado listar() {
+    return dao.listar();
+
+  }
 }

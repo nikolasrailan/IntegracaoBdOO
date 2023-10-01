@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.github.hugoperlin.results.Resultado;
 
@@ -48,8 +49,29 @@ public class JDBCAgendaDAO implements AgendaDAO {
 
   @Override
   public Resultado listar() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    try {
+      Connection con = fabrica.getConnection();
+
+      PreparedStatement pstm = con.prepareStatement("SELECT * FROM agenda");
+
+      ResultSet rs = pstm.executeQuery();
+
+      ArrayList<Agenda> lista = new ArrayList<>();
+      while (rs.next()) {
+        int id = rs.getInt("codigo");
+        String nome = rs.getString("nome");
+
+        Agenda agenda = new Agenda(nome, null, null, id);
+        lista.add(agenda);
+      }
+      rs.close();
+      pstm.close();
+      con.close();
+
+      return Resultado.sucesso("Lista.", lista);
+    } catch (SQLException e) {
+      return Resultado.erro("Problema na consulta: " + e.getMessage());
+    }
   }
 
   @Override

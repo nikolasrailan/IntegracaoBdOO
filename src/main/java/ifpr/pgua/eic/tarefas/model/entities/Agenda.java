@@ -50,4 +50,9 @@ public class Agenda {
   public void setTelefone(Telefone telefone) {
     this.telefone = telefone;
   }
+
+  @Override
+  public String toString() {
+    return "Agenda [nome=" + nome + ", codigo=" + codigo + "]";
+  }
 }
