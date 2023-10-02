@@ -5,14 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.github.hugoperlin.results.Resultado;
 
+import ifpr.pgua.eic.tarefas.model.entities.Agenda;
 import ifpr.pgua.eic.tarefas.model.entities.FabricaConexoes;
 import ifpr.pgua.eic.tarefas.model.entities.Telefone;
 
 public class JDBCTelefoneDAO implements TelefoneDAO {
   private static final String INSERTSQL = "INSERT INTO telefone(telefone, codigo) VALUES (?,?)";
+  private static final String SELECTSQL = "SELECT * FROM telefone";
+  private static final String DELETESQL = "DELETE FROM telefone WHERE codigo = ?";
 
   private FabricaConexoes fabrica;
 
@@ -46,8 +50,29 @@ public class JDBCTelefoneDAO implements TelefoneDAO {
 
   @Override
   public Resultado listar() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    try {
+      Connection con = fabrica.getConnection();
+
+      PreparedStatement pstm = con.prepareStatement(SELECTSQL);
+
+      ResultSet rs = pstm.executeQuery();
+
+      ArrayList<Telefone> lista = new ArrayList<>();
+      while (rs.next()) {
+        int id = rs.getInt("codigo");
+        int tel = rs.getInt("telefone");
+
+        Telefone telefone = new Telefone(tel, id);
+        lista.add(telefone);
+      }
+      rs.close();
+      pstm.close();
+      con.close();
+
+      return Resultado.sucesso("Lista.", lista);
+    } catch (SQLException e) {
+      return Resultado.erro("Problema na consulta: " + e.getMessage());
+    }
   }
 
   @Override
@@ -58,8 +83,25 @@ public class JDBCTelefoneDAO implements TelefoneDAO {
 
   @Override
   public Resultado deletar(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+    try {
+      Connection con = fabrica.getConnection();
+
+      PreparedStatement pstm = con.prepareStatement(DELETESQL);
+
+      pstm.setInt(1, id);
+
+      int ret = pstm.executeUpdate();
+
+      if (ret == 1) {
+        return Resultado.sucesso("Telefone excluido", id);
+      }
+      pstm.close();
+      con.close();
+
+      return Resultado.erro("Erro ao excluir");
+    } catch (SQLException e) {
+      return Resultado.erro("Problema ao excluir: " + e.getMessage());
+    }
   }
 
 }

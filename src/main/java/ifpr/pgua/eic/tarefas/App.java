@@ -75,7 +75,8 @@ public class App extends BaseAppNavigator {
                 new ScreenRegistryFXML(App.class, "buscar_telefone.fxml", o -> new BuscarTelefone()));
         registraTela("EXCLUIR", new ScreenRegistryFXML(App.class, "excluir.fxml", o -> new Excluir()));
         registraTela("EXCLUIRTELEFONE",
-                new ScreenRegistryFXML(App.class, "excluir_telefone.fxml", o -> new ExcluirTelefone()));
+                new ScreenRegistryFXML(App.class, "excluir_telefone.fxml",
+                        o -> new ExcluirTelefone(repositorioTelefone)));
 
     }
 

@@ -28,4 +28,9 @@ public class Telefone {
   public void setCodigo(int codigo) {
     this.codigo = codigo;
   }
+
+  @Override
+  public String toString() {
+    return "Telefone:" + telefone + " / Codigo: " + codigo;
+  }
 }

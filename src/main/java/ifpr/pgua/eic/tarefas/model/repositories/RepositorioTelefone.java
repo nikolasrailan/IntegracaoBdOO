@@ -25,4 +25,17 @@ public class RepositorioTelefone {
 
     return dao.criar(telefoneObj);
   }
+
+  public Resultado listar() {
+    return dao.listar();
+  }
+
+  public Resultado excluir(Telefone telefone) {
+    if (telefone == null) {
+      return Resultado.erro("Telefone inválido.");
+    }
+
+    return dao.deletar(telefone.getCodigo());
+
+  }
 }
