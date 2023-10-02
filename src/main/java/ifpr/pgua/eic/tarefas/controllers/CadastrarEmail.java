@@ -10,7 +10,6 @@ import ifpr.pgua.eic.tarefas.App;
 import ifpr.pgua.eic.tarefas.model.entities.Agenda;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioAgenda;
 import ifpr.pgua.eic.tarefas.model.repositories.RepositorioEmail;
-import ifpr.pgua.eic.tarefas.model.repositories.RepositorioTelefone;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

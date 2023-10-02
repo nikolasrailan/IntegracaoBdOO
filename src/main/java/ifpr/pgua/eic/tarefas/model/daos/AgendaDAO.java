@@ -9,7 +9,8 @@ public interface AgendaDAO {
   Resultado criar(Agenda agenda);
 
   Resultado listar();
-  Resultado buscar(String codigo, String nome, String email, String telefone);
+
+  Resultado buscar(String codigo, String nome);
 
   Resultado atualizar(int id, Agenda nova);
 
