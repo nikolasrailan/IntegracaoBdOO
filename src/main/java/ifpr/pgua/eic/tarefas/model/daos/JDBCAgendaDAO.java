@@ -90,18 +90,25 @@ public class JDBCAgendaDAO implements AgendaDAO {
   public Resultado buscar(String codigo, String nome) {
     String sqlcod = "codigo=? ";
     String sql = "SELECT * FROM agenda where ";
-    String sqlnome = "nome=?";
+    String sqlnome = "nome=? ";
     int count =0;
     if(!nome.isBlank() ||!nome.isEmpty()){
       sql = sql+sqlnome;
       count++;
     }
     if(!codigo.isBlank() ||!codigo.isEmpty()){
-      sql = sql+sqlcod;
+      if(count==1){
+        
+      sql = sql+"AND " +sqlcod;
+      }else{
+        sql = sql+sqlcod;
+      }
       count++;
     }
     try {
       Connection con = fabrica.getConnection();
+
+      System.out.println("SQL: "+ sql);
 
       PreparedStatement pstm = con.prepareStatement(sql);
 
