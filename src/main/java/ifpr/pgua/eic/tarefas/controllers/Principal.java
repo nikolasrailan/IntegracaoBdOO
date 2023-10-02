@@ -12,7 +12,7 @@ public class Principal {
 
   @FXML
   void buscar(ActionEvent event) {
-
+    App.pushScreen("BUSCAR");
   }
 
   @FXML

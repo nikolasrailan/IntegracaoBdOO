@@ -24,6 +24,9 @@ public class RepositorioAgenda {
 
   public Resultado listar() {
     return dao.listar();
+  }
 
+  public Resultado buscar(String codigo, String nome, String email, String telefone){
+    return dao.buscar(codigo,nome,email,telefone);
   }
 }

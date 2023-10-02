@@ -1,5 +1,6 @@
 package ifpr.pgua.eic.tarefas;
 
+import ifpr.pgua.eic.tarefas.controllers.Buscar;
 import ifpr.pgua.eic.tarefas.controllers.Cadastrar;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarAgenda;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarEmail;
@@ -60,7 +61,8 @@ public class App extends BaseAppNavigator {
                         o -> new CadastrarEmail(repositorioEmail, repositorioAgenda)));
         registraTela("CADASTRARTELEFONE",
                 new ScreenRegistryFXML(App.class, "cadastrar_telefone.fxml",
-                        o -> new CadastrarTelefone(repositorioTelefone, repositorioAgenda)));
+                        o -> new CadastrarTelefone(repositorioTelefone, repositorioAgenda))); 
+        registraTela("BUSCAR", new ScreenRegistryFXML(App.class, "buscar.fxml", o -> new Buscar(repositorioAgenda)));
     }
 
 }

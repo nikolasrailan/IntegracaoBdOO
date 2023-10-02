@@ -86,4 +86,49 @@ public class JDBCAgendaDAO implements AgendaDAO {
     throw new UnsupportedOperationException("Unimplemented method 'deletar'");
   }
 
+  @Override
+  public Resultado buscar(String codigo, String nome, String email, String telefone) {
+    //montar sql
+    String sqlEmail = "SELECT email, codigo FROM email where ";
+    String sqlTelefone = "SELECT telefone, codigo FROM telefone where ";
+    String sqlAgenda = "SELECT nome, codigo FROM agenda where ";
+    String emailCase = " email = ?";
+    String telefoneCase = " telefone = ?";
+    String nomeCase = " nome = ?";
+    String codigoCase = " codigo = ?";
+    try {
+      Connection con = fabrica.getConnection();
+      String sql;
+      if(!codigo.isBlank() && !codigo.isEmpty()){
+        sql = sqlAgenda+codigoCase;
+      }else if(!nome.isBlank() && !nome.isEmpty()){
+        sql = sqlAgenda+nomeCase;
+      }else if(!email.isBlank() && !email.isEmpty()){
+        sql = sqlAgenda+emailCase;
+      }else if(!telefone.isBlank() && !telefone.isEmpty()){
+        sql = sqlAgenda+telefoneCase;
+      }else{
+        
+      }
+      PreparedStatement pstm = con.prepareStatement("SELECT * FROM agenda");
+
+      ResultSet rs = pstm.executeQuery();
+
+      ArrayList<Agenda> lista = new ArrayList<>();
+      while (rs.next()) {
+        int id = rs.getInt("codigo");
+
+        Agenda agenda = new Agenda(nome, null, null, id);
+        lista.add(agenda);
+      }
+      rs.close();
+      pstm.close();
+      con.close();
+
+      return Resultado.sucesso("Lista.", lista);
+    } catch (SQLException e) {
+      return Resultado.erro("Problema na consulta: " + e.getMessage());
+    }
+  }
+
 }

@@ -1,19 +1,21 @@
 package ifpr.pgua.eic.tarefas.model.entities;
 
+import java.util.ArrayList;
+
 public class Agenda {
   private String nome;
-  private Telefone telefone;
-  private Email email;
+  private ArrayList<Telefone> telefone;
+  private ArrayList<Email> email;
   private int codigo;
 
-  public Agenda(String nome, Telefone telefone, Email email, int codigo) {
+  public Agenda(String nome, ArrayList<Telefone> telefone, ArrayList<Email> email, int codigo) {
     this.nome = nome;
     this.telefone = telefone;
     this.email = email;
     this.codigo = codigo;
   }
 
-  public Agenda(String nome, Telefone telefone, Email email) {
+  public Agenda(String nome, ArrayList<Telefone> telefone, ArrayList<Email> email) {
     this.nome = nome;
     this.telefone = telefone;
     this.email = email;
@@ -27,11 +29,11 @@ public class Agenda {
     this.codigo = codigo;
   }
 
-  public Email getEmail() {
+  public ArrayList<Email> getEmail() {
     return email;
   }
 
-  public void setEmail(Email email) {
+  public void setEmail(ArrayList<Email> email) {
     this.email = email;
   }
 
@@ -43,11 +45,11 @@ public class Agenda {
     this.nome = nome;
   }
 
-  public Telefone getTelefone() {
+  public ArrayList<Telefone> getTelefone() {
     return telefone;
   }
 
-  public void setTelefone(Telefone telefone) {
+  public void setTelefone(ArrayList<Telefone> telefone) {
     this.telefone = telefone;
   }
 
