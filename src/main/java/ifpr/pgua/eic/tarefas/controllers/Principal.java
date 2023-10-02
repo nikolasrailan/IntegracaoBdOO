@@ -22,6 +22,6 @@ public class Principal {
 
   @FXML
   void excluir(ActionEvent event) {
-
+    App.pushScreen("EXCLUIR");
   }
 }
