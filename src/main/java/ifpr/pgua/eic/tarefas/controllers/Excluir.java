@@ -13,7 +13,7 @@ public class Excluir {
 
   @FXML
   void excluirEmail(ActionEvent event) {
-
+    App.pushScreen("EXCLUIREMAIL");
   }
 
   @FXML

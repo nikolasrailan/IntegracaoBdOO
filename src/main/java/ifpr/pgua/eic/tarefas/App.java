@@ -9,6 +9,7 @@ import ifpr.pgua.eic.tarefas.controllers.CadastrarAgenda;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarEmail;
 import ifpr.pgua.eic.tarefas.controllers.CadastrarTelefone;
 import ifpr.pgua.eic.tarefas.controllers.Excluir;
+import ifpr.pgua.eic.tarefas.controllers.ExcluirEmail;
 import ifpr.pgua.eic.tarefas.controllers.ExcluirTelefone;
 import ifpr.pgua.eic.tarefas.controllers.Principal;
 import ifpr.pgua.eic.tarefas.model.daos.AgendaDAO;
@@ -77,6 +78,8 @@ public class App extends BaseAppNavigator {
         registraTela("EXCLUIRTELEFONE",
                 new ScreenRegistryFXML(App.class, "excluir_telefone.fxml",
                         o -> new ExcluirTelefone(repositorioTelefone)));
+        registraTela("EXCLUIREMAIL",
+                new ScreenRegistryFXML(App.class, "excluir_email.fxml", o -> new ExcluirEmail(repositorioEmail)));
 
     }
 

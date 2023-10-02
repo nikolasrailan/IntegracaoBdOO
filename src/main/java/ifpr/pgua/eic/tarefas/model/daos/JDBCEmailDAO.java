@@ -5,15 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.github.hugoperlin.results.Resultado;
 
 import ifpr.pgua.eic.tarefas.model.entities.Email;
 import ifpr.pgua.eic.tarefas.model.entities.FabricaConexoes;
+import ifpr.pgua.eic.tarefas.model.entities.Telefone;
 
 public class JDBCEmailDAO implements EmailDAO {
 
   private static final String INSERTSQL = "INSERT INTO email(email, codigo) VALUES (?,?)";
+  private static final String SELECTSQL = "SELECT * FROM email";
+  private static final String DELETESQL = "DELETE FROM email WHERE codigo = ?";
+
   private FabricaConexoes fabrica;
 
   public JDBCEmailDAO(FabricaConexoes fabrica) {
@@ -46,8 +51,29 @@ public class JDBCEmailDAO implements EmailDAO {
 
   @Override
   public Resultado listar() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    try {
+      Connection con = fabrica.getConnection();
+
+      PreparedStatement pstm = con.prepareStatement(SELECTSQL);
+
+      ResultSet rs = pstm.executeQuery();
+
+      ArrayList<Email> lista = new ArrayList<>();
+      while (rs.next()) {
+        int id = rs.getInt("codigo");
+        String e = rs.getString("email");
+
+        Email email = new Email(e, id);
+        lista.add(email);
+      }
+      rs.close();
+      pstm.close();
+      con.close();
+
+      return Resultado.sucesso("Lista.", lista);
+    } catch (SQLException e) {
+      return Resultado.erro("Problema na consulta: " + e.getMessage());
+    }
   }
 
   @Override
@@ -58,8 +84,25 @@ public class JDBCEmailDAO implements EmailDAO {
 
   @Override
   public Resultado deletar(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+    try {
+      Connection con = fabrica.getConnection();
+
+      PreparedStatement pstm = con.prepareStatement(DELETESQL);
+
+      pstm.setInt(1, id);
+
+      int ret = pstm.executeUpdate();
+
+      if (ret == 1) {
+        return Resultado.sucesso("Email excluido", id);
+      }
+      pstm.close();
+      con.close();
+
+      return Resultado.erro("Erro ao excluir");
+    } catch (SQLException e) {
+      return Resultado.erro("Problema ao excluir: " + e.getMessage());
+    }
   }
 
 }
