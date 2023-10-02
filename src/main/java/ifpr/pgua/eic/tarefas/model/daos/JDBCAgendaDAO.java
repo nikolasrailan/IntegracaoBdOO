@@ -87,38 +87,41 @@ public class JDBCAgendaDAO implements AgendaDAO {
   }
 
   @Override
-  public Resultado buscar(String codigo, String nome, String email, String telefone) {
-    //montar sql
-    String sqlEmail = "SELECT email, codigo FROM email where ";
-    String sqlTelefone = "SELECT telefone, codigo FROM telefone where ";
-    String sqlAgenda = "SELECT nome, codigo FROM agenda where ";
-    String emailCase = " email = ?";
-    String telefoneCase = " telefone = ?";
-    String nomeCase = " nome = ?";
-    String codigoCase = " codigo = ?";
+  public Resultado buscar(String codigo, String nome) {
+    String sqlcod = "codigo=? ";
+    String sql = "SELECT * FROM agenda where ";
+    String sqlnome = "nome=?";
+    int count =0;
+    if(!nome.isBlank() ||!nome.isEmpty()){
+      sql = sql+sqlnome;
+      count++;
+    }
+    if(!codigo.isBlank() ||!codigo.isEmpty()){
+      sql = sql+sqlcod;
+      count++;
+    }
     try {
       Connection con = fabrica.getConnection();
-      String sql;
-      if(!codigo.isBlank() && !codigo.isEmpty()){
-        sql = sqlAgenda+codigoCase;
-      }else if(!nome.isBlank() && !nome.isEmpty()){
-        sql = sqlAgenda+nomeCase;
-      }else if(!email.isBlank() && !email.isEmpty()){
-        sql = sqlAgenda+emailCase;
-      }else if(!telefone.isBlank() && !telefone.isEmpty()){
-        sql = sqlAgenda+telefoneCase;
+
+      PreparedStatement pstm = con.prepareStatement(sql);
+
+      if(count ==2){
+        pstm.setString(1,nome);
+        pstm.setString(2, codigo);
+      }else if(!codigo.isBlank() || !codigo.isEmpty()){
+        pstm.setString(1, codigo);
       }else{
-        
+        pstm.setString(1, nome);
       }
-      PreparedStatement pstm = con.prepareStatement("SELECT * FROM agenda");
 
       ResultSet rs = pstm.executeQuery();
 
       ArrayList<Agenda> lista = new ArrayList<>();
       while (rs.next()) {
         int id = rs.getInt("codigo");
+        String nomeString = rs.getString("nome");
 
-        Agenda agenda = new Agenda(nome, null, null, id);
+        Agenda agenda = new Agenda(nomeString, null, null, id);
         lista.add(agenda);
       }
       rs.close();
